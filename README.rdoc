@@ -1,4 +1,7 @@
-= ActsAsTaggableOn
+= ActsAsTaggableOn(multitenant)
+
+Modified for adding multitenacy ,only some methods only support for multitenacy.
+before using the method please verify the method has accound_id passed in.
 
 This plugin was originally based on Acts as Taggable on Steroids by Jonathan Viney.
 It has evolved substantially since that point, but all credit goes to him for the

@@ -3,7 +3,7 @@ module ActsAsTaggableOn
     include ActsAsTaggableOn::ActiveRecord::Backports if ::ActiveRecord::VERSION::MAJOR < 3
     include ActsAsTaggableOn::Utils
       
-    attr_accessible :name
+    attr_accessible :name,:account_id
 
     ### ASSOCIATIONS:
 
@@ -11,7 +11,7 @@ module ActsAsTaggableOn
 
     ### VALIDATIONS:
 
-    validates_presence_of :name
+    validates_presence_of :name,:account_id
     validates_uniqueness_of :name
 
     ### SCOPES:
@@ -24,8 +24,8 @@ module ActsAsTaggableOn
       where(list.map { |tag| sanitize_sql(["name #{like_operator} ?", escape_like(tag.to_s)]) }.join(" OR "))
     end
   
-    def self.named_like(name)
-      where(["name #{like_operator} ?", "%#{escape_like(name)}%"])
+    def self.named_like(name,account_id)
+      where(["name #{like_operator} ? AND account_id = ? ", "%#{escape_like(name)}%" ,account_id])
     end
 
     def self.named_like_any(list)
@@ -34,8 +34,8 @@ module ActsAsTaggableOn
 
     ### CLASS METHODS:
 
-    def self.find_or_create_with_like_by_name(name)
-      named_like(name).first || create(:name => name)
+    def self.find_or_create_with_like_by_name(name,account_id)
+      named_like(name,account_id).first || create(:name => name)
     end
 
     def self.find_or_create_all_with_like_by_name(*list)
