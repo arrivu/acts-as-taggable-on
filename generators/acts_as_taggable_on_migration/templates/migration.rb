@@ -8,7 +8,6 @@ class ActsAsTaggableOnMigration < ActiveRecord::Migration
     
     create_table :taggings do |t|
       t.column :tag_id, :integer
-      t.column :account_id, :integer , :limit => 8
       t.column :taggable_id, :integer
       t.column :tagger_id, :integer
       t.column :tagger_type, :string
